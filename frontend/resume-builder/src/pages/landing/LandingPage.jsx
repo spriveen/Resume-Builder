@@ -1,18 +1,23 @@
-// 'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HERO_IMG from '../../assets/hero-img.png';
+import Modal from '../../components/Modal';
+import Login from '../Auth/Login';
+import SignUp from '../Auth/SignUp';
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [openAuthModal, setOpenAuthModal] = useState(true);
   const [currentPage, setCurrentPage] = useState('login');
 
-  const handleCTA = () => {};
+  const handleCTA = () => {
+    setOpenAuthModal(true);
+  };
 
   return (
-    <div className="w-full min-h-full bg-white pb-96">
+    <div className="w-full min-h-full bg-white">
       <div className="container mx-auto px-4 py-6">
         {/* Header */}
         <header className="flex justify-between items-center mb-16">
@@ -68,6 +73,26 @@ const LandingPage = () => {
           </div>
         </section>
       </div>
+
+      {/* Footer */}
+      <div className="text-sm bg-gray-50 text-center p-5 mt-5">
+        Develop By Riveen_Official
+      </div>
+
+      {/* Modal */}
+      <Modal
+        isOpen={openAuthModal}
+        onClose={() => {
+          setOpenAuthModal(false);
+          setCurrentPage('login');
+        }}
+        hideHeader
+      >
+        <div>
+          {currentPage === 'login' && <Login setCurrentPage={setCurrentPage} />}
+          {currentPage === 'signup' && <SignUp setCurrentPage={setCurrentPage} />}
+        </div>
+      </Modal>
     </div>
   );
 };
